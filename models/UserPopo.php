@@ -13,16 +13,20 @@
         public function __construct($args){}
 
         //Setter methods
+        public function setId($id){
+            $this->id=strip_tags($id);
+        }
+
         public function setName($name){
-            $this->name=$name;
+            $this->name=ucwords(strip_tags($name));
         }
 
         public function setPhoneNumber($phoneNumber){
-            $this->phoneNumber=$phoneNumber;
+            $this->phoneNumber=strip_tags($phoneNumber);
         }
 
         public function setPassword($password){
-            $this->password=$password;
+            $this->password=md5(SHA1(strip_tags($password)));
         }
 
         public function setJoinedDate($joinedDate){
@@ -30,11 +34,11 @@
         }
 
         public function setEmail($email){
-            $this->email=$email;
+            $this->email=strip_tags($email);
         }
 
         public function setProfileImageDir($profileImageDir){
-            $this->profileImageDir=$profileImageDir;
+            $this->profileImageDir=strip_tags($profileImageDir);
         }
 
         public function setAccStatus($accStatus){
@@ -42,6 +46,10 @@
         }
 
         //Getter methods
+        public function getId(){
+            return $this->id;
+        }
+
         public function getName(){
             return $this->name;
         }

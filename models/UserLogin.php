@@ -7,14 +7,15 @@
         private $result=null;
 
         public function __construct($phoneNumber, $password){
-            parent::setPhoneNumber(strip_tags($phoneNumber));
-            parent::setPassword(md5(SHA1(strip_tags($password))));
+            parent::setPhoneNumber($phoneNumber);
+            parent::setPassword($password);
         }
 
         private final function userLoginProcess(){
             $query = "SELECT user_id, joined_date, name, phone_number, email, profile_image_dir, acc_status
                            FROM user WHERE phone_number = ? AND password = ?";
 
+            //Strict bind_param rule: only variables should be passed by reference
             $phoneNumber=parent::getPhoneNumber();
             $password=parent::getPassword();
 

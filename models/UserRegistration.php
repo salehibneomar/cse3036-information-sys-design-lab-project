@@ -9,11 +9,10 @@
 
         public function __construct($name,$phoneNumber,$password,$joinedDate){
 
-            parent::setName(ucwords(strip_tags($name)));
-            parent::setPhoneNumber(strip_tags($phoneNumber));
-            parent::setPassword(md5(SHA1(strip_tags($password))));
+            parent::setName($name);
+            parent::setPhoneNumber($phoneNumber);
+            parent::setPassword($password);
             parent::setJoinedDate($joinedDate);
-
             parent::setProfileImageDir($this->defaultImage);
         }
 
@@ -21,6 +20,7 @@
             
             $query="INSERT INTO user (joined_date, name, phone_number, password, profile_image_dir) VALUES(?, ?, ?, ?, ?)";
 
+            //Strict bind_param rule: only variables should be passed by reference
             $joinedDate=parent::getJoinedDate();
             $name=parent::getName();
             $phoneNumber=parent::getPhoneNumber();

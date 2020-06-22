@@ -18,6 +18,14 @@
 ?>
 
     <div class="profile-wrapper">
+        <?php if(isset($_SESSION['message'])){ ?>
+                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <strong><?=$_SESSION['message'];?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } unset($_SESSION['message']); ?>
         <div class="card">
             <div class="card-header bg-light"> 
                 <img src="<?=$_SESSION['user_arr']['profile_image_dir'];?>" alt="" class="mx-auto d-block img-thumbnail">
