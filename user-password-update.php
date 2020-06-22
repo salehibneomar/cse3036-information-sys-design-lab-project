@@ -74,15 +74,15 @@
                         <form action="" method="post">
                             <div class="form-group mb-3">
                                 <label class="text-muted small">Previous password</label>
-                                <input class="form-control" type="password" name="old_password" >
+                                <input class="form-control" type="password" name="old_password" minlength="6" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="text-muted small">New password</label>
-                                <input class="form-control" type="password" name="new_password">
+                                <input class="form-control" type="password" name="new_password" minlength="6" required>
                             </div>
                             <div class="form-group mb-5">
                                 <label class="text-muted small">Re-type password</label>
-                                <input class="form-control" type="password" name="retyped_new_password" >
+                                <input class="form-control" type="password" name="retyped_new_password" minlength="6" required>
                             </div>
                             <div class="form-group mb-4">
                                 <button class="btn btn-info w-100" name="update_btn">Update&ensp;<i class="fas fa-sync-alt"></i></button>

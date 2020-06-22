@@ -105,6 +105,7 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="image" accept='.jpg, .jpeg, .png'>
                                     <label class="custom-file-label">Image...</label>
+                                    <small class="form-text text-muted">Supports: jpg, jpeg, and .png</small>
                                 </div>
                             </div>
                             <div class="form-group mb-4">
