@@ -1,0 +1,708 @@
+html{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+body{
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif !important;
+    background: rgb(227, 230, 238) !important;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    z-index: 90;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 3px solid rgba(128, 128, 128, 0.3);
+}
+
+.mobile-content{
+    display: none !important;
+}
+
+.wrapper-navbar{
+    width: 92%;
+    margin: 0 auto;
+}
+
+.navbar-toggler{
+    background: #17A2B8 !important;
+    color: white !important;
+    padding: 8px 15px !important;
+}
+
+.sidebarBackground{
+    display: none;
+    position: fixed;
+    z-index: 200 !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.filterPanel{
+    display: none;
+    position: fixed;
+    background: white;
+    z-index: 210 !important;
+    top: 0;
+    bottom: 0;
+    width: 320px !important;
+    margin-left: -322px;
+    transition: ease-in-out 0.2s;
+    overflow-y: auto !important;
+    scrollbar-color:  rgba(0,0,0,0.1) rgba(0,0,0,0.02); /* thumb and track color */
+    scrollbar-width: 200px !important;
+    scroll-behavior: smooth !important;
+}
+
+.filterAsideCloseBtn{
+    border-radius: 0 !important;
+}
+
+.filterAsideCloseBtn:focus{
+    box-shadow: none !important;
+}
+
+.go_up{
+    display: none;
+    position: fixed;
+    z-index: 150 !important;
+    width: 50px;
+    height: 50px;
+    background: rgb(233, 92, 113);
+    border-radius: 50%;
+    color: white;
+    bottom: 8%;
+    right: 2%;
+    text-align: center !important;
+    font-size: 15pt;
+    cursor: pointer;
+    border: 1px solid rgba(231, 96, 116, 1);
+    box-shadow: 0 0 1px 3px rgba(231, 96, 116, 0.2);
+}
+
+.go_up_arrow{
+    margin-top: 35%;
+    transition: ease-in-out 0.2s;
+}
+
+.go_up:hover .go_up_arrow{
+    margin-top: 15%;
+}
+
+.mini-forms{
+    margin: 100px auto !important;
+    padding: 5px !important;
+}
+
+.sign-up-btn:hover{
+    background: transparent !important;
+    color: green !important;
+}
+
+.brand-title{
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    color:#244a69;
+}
+
+.brand-title:hover{
+    color: black;
+}
+
+.brand-title:focus{
+    outline: none !important;
+}
+
+.nav-link{
+    color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.nav-item{
+    border-radius: 10px !important;
+    margin-left: 10px !important;
+}
+
+.nav-item:hover{
+    background: rgba(220, 220, 220, 0.2) !important;
+    border-radius: 10px !important;
+}
+
+.profile-dropdown .dropdown-menu .dropdown-item:hover{
+    background: white !important;
+    color: black !important;
+}
+
+.main-section{
+    width: 100%;
+    margin: 100px 0 60px 0 !important;
+    padding: 5px;
+}
+
+.main-section-wrapper{
+    display: block !important;
+    overflow: hidden;
+    width: 85% !important;
+    margin: 0 auto;
+}
+
+.main-section-top-heading{
+    display:block !important; 
+    font-size: 12pt !important; 
+    max-height: 24px !important;
+    overflow: hidden;
+}
+
+.left-side-content{
+    width: 24%;
+    float: left;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.ad-details-card{
+    width: 85% !important;
+    margin: 100px auto !important;
+    padding: 5px !important;
+}
+
+.profile-wrapper{
+    width: 50%;
+    margin: 100px auto;
+    padding: 5px;
+}
+
+.ad-list-wrapper{
+    width: 80%;
+    margin: 100px auto;
+    padding: 5px;
+}
+
+.ad-list-wrapper .card .card-body{
+    overflow-x: auto !important;
+}
+
+.profile-wrapper .card .card-header{
+    padding: 25px 5px !important;
+}
+
+.profile-wrapper .card .card-header img{
+    max-width: 180px !important;
+    max-height: 180px !important;
+    border-radius: 50% !important;
+    padding: 4px !important;
+    border: 3px solid rgba(150, 144, 184, 0.4)!important;
+    box-shadow: 0 0 2px 4px rgba(150, 144, 184, 0.2);
+}
+
+.ad-upload-form-wrapper{
+    width: 70%;
+    margin: 100px auto;
+    padding: 5px;
+}
+
+/* Flex slider custom */
+.flexslider{
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+}
+
+.flexslider .flex-direction-nav a {
+    display: block !important;
+    width: 35px !important;
+    height: 35px !important;
+    top: 15% !important;
+    background-color: rgba(0, 0, 0, 0.6)!important;
+    text-align: center !important;
+    cursor: pointer;
+}
+
+.flex-direction-nav a:before {
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+    content: '\f001' !important;
+    color: white !important;
+    text-shadow: none !important;
+    line-height: 36px !important;
+}
+
+.flexslider, .flexslider .slides img {
+    height: 520px !important;
+    cursor: pointer;
+}
+
+.flex-control-nav{
+    display: none !important;
+}
+
+.flexslider .flex-direction-nav .flex-next {
+    right: 0px !important;
+    opacity: 1 !important;
+    text-align: center !important;
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+}
+
+.flexslider .flex-direction-nav .flex-prev {
+    left: 0px !important;
+    opacity: 1 !important;
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+}
+
+.flexslider:hover .flex-direction-nav .flex-next{
+    right: 0px !important;
+}
+
+.flexslider:hover .flex-direction-nav .flex-prev{
+    left: 0px !important;
+}
+
+/* --Flex slider custom-- */
+
+.middle-content{
+    width: 76%;
+    float: left;
+    overflow: hidden;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+}
+
+.search-and-filter-elements{
+    margin: 0;
+    padding: 0;
+}
+
+.side-content-card{
+    border: none !important;
+}
+
+.side-content-card .card-header{
+    border-radius: 0 !important;
+}
+
+
+.side-content-list .list-group-item{
+    padding: 5px !important;
+    font-size: 11pt !important;
+    border: none !important;
+}
+
+.side-content-list .list-group-item a{
+    color: rgba(7, 18, 124, 0.7) !important;
+    text-decoration: none;
+}
+
+.side-content-list .list-group-item a:hover{
+    color: rgba(0, 0, 0, 1) !important;
+}
+
+.ad-image-con{
+    width: 100%;
+    height: 180px !important;
+    overflow: hidden;
+    border: 10px solid transparent;
+}
+
+.ad-image-con img{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.advert-card .card-body{
+    padding-top: 1px !important;
+}
+
+.advert-card .card-body h6{
+    max-width: 100%;
+    /* For longer content, 
+    you can add a .text-truncate class to truncate the text with an ellipsis. 
+    Requires display: inline-block or display: block. */
+    overflow:hidden; 
+    white-space:nowrap !important;
+    text-overflow: ellipsis !important;
+    
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 12.5pt;
+    word-spacing: 4px;
+    color: #18344d;
+}
+
+.advert-card .card-body h5{
+    margin-top: 20px;
+    letter-spacing: 1px;
+    color: #18344d;
+    font-size: 13.5pt;
+    width: 100%;
+}
+
+.advert-card .card-body p{
+    margin-top: 8px;
+    font-size: 10.5pt;
+    word-spacing: 4px;
+    color: #244a69ec !important;
+    margin-bottom: 0;
+}
+
+.advert-card:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.advert-card:hover  img{
+    -ms-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+
+.pagination-container{
+    margin-top: 20px !important;
+    margin-bottom: 40px !important;
+    overflow-x: auto !important;
+}
+
+.stat-section{
+    width: 100%;
+    margin: 60px 0 0 0;
+    padding: 0;
+    float: left;
+    overflow: hidden;
+}
+
+.stat-section .card{
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 3px solid rgba(128, 128, 128, 0.3);
+    padding: 80px 5px !important;
+}
+
+.stat-col p:nth-last-child(1){
+    font-size: 18pt !important;
+}
+
+.stat-section .card .row{
+    width: 75% !important;
+    margin: 0 auto !important;
+}
+
+.numberCounter{
+    transition: ease-in 2s !important;
+}
+
+.details-last-row{
+    margin-top: 30px !important;
+}
+
+.information-col .card{
+    border: none !important;
+}
+
+.information-col .card .list-group-item{
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+}
+
+.information-col h6{
+    font-size: 13pt;
+    color: rgba(25, 51, 100, 0.8);
+    font-weight: 700;
+}
+
+.information-col p{
+    margin: 0;
+    padding: 0 10px;
+    font-size: 11pt;
+    line-height: 26px;
+}
+
+.ad-report-row{
+    margin-top: 30px !important;
+}
+
+footer{
+    width: 100%;
+    margin: auto 0 0 0 !important;
+    padding: 0;
+    float: left;
+    overflow: hidden;
+}
+
+.footer-row{
+    margin: 100px 0 !important;
+}
+
+.footer-row h5{
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.footer-row ul{
+    background: transparent !important;
+    border: none !important;
+    margin: 0 auto !important;
+}
+
+.footer-row ul li{
+    background: transparent !important;
+    border: none !important;
+    padding: 20px 0 0 0 !important;
+    text-align: center !important;
+}
+
+.footer-row ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 10pt !important;
+}
+
+.footer-row ul li a:hover{
+    color: rgb(190, 189, 255);
+}
+
+.footer-last{
+    background: black !important;
+    padding: 40px 10px 80px 10px !important;
+    text-align: center;
+    color: white;
+}
+
+
+@media all and (max-width: 1450px){
+    .main-section-wrapper, .ad-details-card{
+        width: 95% !important;
+    }
+    .profile-wrapper{
+        width: 60%;
+    }
+    .ad-list-wrapper{
+        width: 85%;
+    }
+    .ad-upload-form-wrapper{
+        width: 80%;
+    }
+}
+
+@media all and (max-width: 1250px){
+    .flexslider, .flexslider .slides img {
+        height: 480px !important;
+    }
+    .information-col .card .card-header h6{
+        font-size: 12pt;
+    }
+    .profile-wrapper{
+        width: 65%;
+    }
+    .ad-list-wrapper{
+        width: 90%;
+    }
+    .ad-upload-form-wrapper{
+        width: 85%;
+    }
+}
+
+@media all and (max-width: 1100px){
+    .desktop-content{
+        display: none;
+    }
+    .middle-content{
+        width: 100% !important;
+
+    }
+    .main-section-wrapper, .ad-details-card{
+        width: 88% !important;
+    }
+    .stat-section .card .row{
+        width: 80% !important;
+    }
+    .mobile-content{
+        display: block !important;
+    }
+    .flexslider, .flexslider .slides img {
+        height: 400px !important;
+    }
+    .ad-details-card .card .card-header .card-title {
+        font-size: 13pt;
+    }
+    .profile-wrapper{
+        width: 70%;
+    }
+    .ad-list-wrapper{
+        width: 95%;
+    }
+    .ad-upload-form-wrapper{
+        width: 90%;
+    }
+}
+
+@media all and (max-width: 991px){
+    .navbar-brand{
+        margin-bottom: 10px !important;
+    }
+    .nav-item{
+        border-radius: 10px !important;
+        margin-left: 0 !important;
+        margin-top: 2px !important;
+        padding: 0 15px !important;
+    }
+    .nav-btn-group{
+        margin-top: 25px !important;
+        margin-bottom: 10px !important;
+        margin-left: 15px !important;
+    }
+
+    .profile-dropdown{
+        margin-left: 15px !important;
+        margin-top: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .stat-section .card .row{
+        width: 95% !important;
+    }
+    .flexslider, .flexslider .slides img {
+        height: 500px !important;
+    }
+
+    .details-last-row{
+        margin-top: 0px !important;
+    }
+
+    .information-col{
+        margin-top: 20px !important;
+    }
+    .information-col .card .list-group-item{
+        font-size: 11pt !important;
+    }
+    .ad-report-row{
+        margin-top: 0px !important;
+    }
+    .information-col .card .card-header h6{
+        font-size: 11pt;
+    }
+    .profile-wrapper{
+        width: 80%;
+    }
+    .ad-list-wrapper{
+        width: 98%;
+    }
+    .ad-upload-form-wrapper{
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 768px){
+    .main-section-wrapper, .ad-details-card{
+        width: 98% !important;
+    }
+    .stat-section .card{
+        padding: 5px 5px 50px 5px !important;
+    }
+    .stat-col{
+        margin-top: 50px;
+    }
+    .footer-col{
+        margin-bottom: 50px !important;
+    }
+    .footer-row{
+        margin: 50px 0 15px 0 !important;
+    }
+    .flexslider, .flexslider .slides img {
+        height: 460px !important;
+    }
+    .information-col p{
+        font-size: 10pt;
+    }
+    .profile-wrapper{
+        width: 85%;
+    }
+    .profile-wrapper .card .card-body table tr td{
+        font-size: 11pt !important;
+    }
+    .ad-list-wrapper{
+        width: 100%;
+    }
+    #ad-list-table{
+        font-size: 11pt !important;
+    }
+    #ad-list-table .btn-sm{
+        width: 50% !important;
+        margin-bottom: 5px !important;
+    }
+}
+
+@media all and (max-width: 668px){
+    .flexslider, .flexslider .slides img {
+        height: 380px !important;
+    }
+    .ad-details-card .card .card-header .card-title {
+        font-size: 12pt !important;
+    }
+    .profile-wrapper{
+        width: 95%;
+    }
+}
+
+@media all and (max-width: 528px){
+    .flexslider, .flexslider .slides img {
+        height: 320px !important;
+    }
+    .profile-wrapper{
+        width: 98%;
+    }
+    .profile-wrapper .card .card-body table tr td{
+        font-size: 10pt !important;
+    }
+}
+
+@media all and (max-width: 468px){
+    .flexslider, .flexslider .slides img {
+        height: 280px !important;
+    }
+}
+
+@media all and (max-width: 400px){
+    .profile-wrapper .card .card-body{
+        overflow-x: auto !important;
+    }
+    .flexslider, .flexslider .slides img {
+        height: 220px !important;
+    }
+    .information-col .card .list-group-item{
+        font-size: 10pt !important;
+    }
+}
+
+@media all and (max-width: 330px){
+    .flexslider, .flexslider .slides img {
+        height: 180px !important;
+    }
+}
