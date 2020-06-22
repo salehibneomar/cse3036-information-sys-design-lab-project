@@ -22,7 +22,7 @@
         $profileImageDir = $_SESSION['user_arr']['profile_image_dir'];
 
         if(empty($name) || empty($phoneNumber)){
-            $message="Name and Phone cannot be empty!";
+            $message="Name and Phone number cannot be empty!";
         }
         else{
             if($imageFileSize>0){
@@ -31,7 +31,7 @@
 
             $accountUpdateStatus=UserProfileOperations::updateUserById($id, $name, $phoneNumber, $email, $profileImageDir);
 
-            if($accountUpdateStatus->affected_rows==1){
+            if($accountUpdateStatus==1){
                 $_SESSION['user_arr']['name']=$name;
                 $_SESSION['user_arr']['phone_number']=$phoneNumber;
                 $_SESSION['user_arr']['email']=$email;
@@ -44,7 +44,7 @@
                 sleep(1);
                 header("Location: user-profile");
             }
-            else if($accountUpdateStatus->affected_rows==0){
+            else if($accountUpdateStatus==0){
                 $message="No update!";
                 $alertColor="alert-info";
             }
