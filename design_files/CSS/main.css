@@ -134,6 +134,17 @@ header{
     margin-left: 10px !important;
 }
 
+.header-notification{
+    margin-right: 30px !important;
+}
+
+.header-notification .dropdown-menu{
+    max-height: 300px !important;
+    width: 350px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
 .nav-item:hover{
     background: rgba(220, 220, 220, 0.2) !important;
     border-radius: 10px !important;
@@ -561,6 +572,9 @@ footer{
     .ad-upload-form-wrapper{
         width: 90%;
     }
+    .wrapper-navbar{
+        width: 96%;
+    }
 }
 
 @media all and (max-width: 991px){
@@ -571,7 +585,11 @@ footer{
         border-radius: 10px !important;
         margin-left: 0 !important;
         margin-top: 2px !important;
-        padding: 0 15px !important;
+        margin-right: 0 !important;
+        padding: 0 25px !important;
+    }
+    .header-notification{
+        margin-bottom: 20px !important;
     }
     .nav-btn-group{
         margin-top: 25px !important;
@@ -616,6 +634,9 @@ footer{
     }
     .ad-upload-form-wrapper{
         width: 100%;
+    }
+    .header-notification .dropdown-menu{
+        width: 100% !important;
     }
 }
 
@@ -669,6 +690,9 @@ footer{
     .profile-wrapper{
         width: 95%;
     }
+    .header-notification .dropdown-menu{
+        width: 400px !important;
+    }
 }
 
 @media all and (max-width: 528px){
@@ -687,6 +711,9 @@ footer{
     .flexslider, .flexslider .slides img {
         height: 280px !important;
     }
+    .header-notification .dropdown-menu{
+        width: 340px !important;
+    }
 }
 
 @media all and (max-width: 400px){
@@ -698,6 +725,9 @@ footer{
     }
     .information-col .card .list-group-item{
         font-size: 10pt !important;
+    }
+    .header-notification .dropdown-menu{
+        width: 260px !important;
     }
 }
 

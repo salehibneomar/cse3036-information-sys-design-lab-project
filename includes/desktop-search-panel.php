@@ -69,7 +69,7 @@
 
                 <div class="middle-content card">
                     <div class="card-header bg-light">
-                        <span class="d-block text-center font-weight-bold main-section-top-header"><small>All Ads</small></span>
+                        <span class="d-block text-center font-weight-bold main-section-top-header"><small><?=$getAllAds->num_rows;?>, Ads found.</small></span>
                     </div>
                     <div class="card-body pb-2">
                         

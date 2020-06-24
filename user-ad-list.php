@@ -1,3 +1,10 @@
+<?php
+    require_once 'config/config.init.php';
+    if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
+    require_once 'models/AdOperations.php';
+
+    $getAddListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +26,9 @@
     <div class="ad-list-wrapper">
         <div class="card">
             <div class="card-header bg-light">
-                <h6 class="text-muted font-weight-bold p-2 text-center">All Ads</h6>
+                <h6 class="text-muted font-weight-bold p-2 text-center"><?=$getAddListByUserId->num_rows;?>, records found.</h6>
             </div>
+            <?php if($getAddListByUserId->num_rows!=0){ ?>
             <div class="card-body">
                 <table class="table table-hover w-100" id="ad-list-table" >
                     <thead>
@@ -33,43 +41,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php while($result=$getAddListByUserId->fetch_assoc()){ ?>
                         <tr>
-                            <td><img src="img/kk.jfif" alt="" width="80" height="60"></td>
-                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                            <td><span class="badge badge-secondary p-2">5/1/2020</span></td>
-                            <td><span class="badge badge-info p-2">Posted</span></td>
+                            <td><img src="<?=$result['image_dir'];?>"  width="80" height="60"></td>
+                            <td><?=$result['title'];?></td>
+                            <td><span class="badge badge-secondary p-2"><?=$result['date_posted'];?></span></td>
+                            <td><span class="badge badge-info p-2"><?=$result['ad_status'];?></span></td>
                             <td>
-                                <a href="view-add-details.php" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
-                                <a href="ad-information-update.php" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                                <a href="view-add-details?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
+                                <a href="ad-information-update?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
+                                <a href="delete-ad?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
-                        <tr>
-                            <td><img src="img/kk.jfif" alt="" width="80" height="60"></td>
-                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                            <td><span class="badge badge-secondary p-2">5/1/2020</span></td>
-                            <td><span class="badge badge-info p-2">Posted</span></td>
-                            <td>
-                                <a href="view-add-details.php" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
-                                <a href="ad-information-update.php" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img src="img/kk.jfif" alt="" width="80" height="60"></td>
-                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                            <td><span class="badge badge-secondary p-2">5/1/2020</span></td>
-                            <td><span class="badge badge-info p-2">Posted</span></td>
-                            <td>
-                                <a href="view-add-details.php" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
-                                <a href="ad-information-update.php" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                        
+
+                    <?php } ?>    
                     </tbody>
                 </table>
             </div>
+            <?php } ?>    
         </div>
     </div>
 

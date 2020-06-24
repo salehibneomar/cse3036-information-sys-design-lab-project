@@ -1,3 +1,74 @@
+<?php
+    require_once 'config/config.init.php';
+    if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
+    include_once 'models/AdOperations.php';
+
+    $message=false;
+    $alertColor="alert-warning";
+
+        $title="";
+        $city="";
+        $location="";
+        $price="";
+        $residentialType="";
+        $direction="";
+        $bed="";
+        $bath="";
+        $floorLevel="";
+        $size="";
+        $briefDesc="";
+
+
+    if(isset($_POST['submit'])){
+        //Basic Info
+        $title=trim($_POST['title']);
+        $city=trim($_POST['city']);
+        $location=trim($_POST['location']);
+        $datePosted=date('Y-m-d');
+        $price=trim($_POST['price']);
+        $residentialType=$_POST['type'];
+        $userId=$_SESSION['user_arr']['user_id'];
+
+        //Features
+        $direction=$_POST['direction'];
+        $bed=trim($_POST['bed']);
+        $bath=trim($_POST['bath']);
+        $size=trim($_POST['size']);
+        $floorLevel=trim($_POST['floor']);
+        $briefDesc=trim($_POST['description']);
+
+        //Images
+        $imageArr=$_FILES['ad_images']['name'];
+        $firstImageSize=$_FILES['ad_images']['size'][0];
+
+        if(empty($title) || empty($city) || empty($location) || empty($price) || empty($residentialType) ||
+           empty($direction) || empty($bed) || empty($bath) || empty($floorLevel) || empty($size) || 
+           empty($briefDesc) || $firstImageSize==0){
+            $message="Invalid/Empty fields found!";
+        }
+        else if(count($imageArr)>5){
+            $message="You cannot add more than 5 pictures!";
+        }
+        else{
+            $featureInfo=new AdFeature($direction, $bed, $bath, $size, $floorLevel, $briefDesc);
+            $imageList=array();
+            for($i=0; $i<count($imageArr); ++$i){
+                $imageDir="ad_pic/".$imageArr[$i];
+                if($i==0){
+                    array_push($imageList, new AdImage($imageDir, $datePosted, 1));
+                }
+                else{
+                    array_push($imageList, new AdImage($imageDir, $datePosted, 0));
+                }
+            }
+
+            $adObj = new AdPopo($title, $city, $location, $datePosted, $price, $residentialType, $userId, $featureInfo, $imageList);
+            $ad=json_decode(json_encode($adObj), true);
+
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,105 +87,91 @@
 ?>
 
     <div class="ad-upload-form-wrapper">
+    <?php if($message){ ?>
+        <div class="alert <?=$alertColor;?> alert-dismissible fade show text-center" role="alert">
+            <strong><?=$message;?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php } ?>
         <div class="card">
             <div class="card-header">
                 <h6 class="text-muted font-weight-bold p-2 text-center">Ad Information Form</h6>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="form-row p-2">
                         <div class="form-group col-lg-12">
                             <label class="text-muted small">Title <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="" id="">
+                            <input class="form-control" type="text" name="title" minlength="5" maxlength="150" value="<?=$title;?>" required>
                             <small class="form-text text-muted">Title should not have more than 150 characters</small>
                         </div>
                         <div class="form-group col-md-2 col-sm-12">
                             <label class="text-muted small">City <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-control">
-                                <option value="1">Dhaka</option>
-                                <option value="2">Barisal</option>
-                                <option value="3">Chittagong</option>
-                                <option value="4">Khulna </option>
-                                <option value="5">Mymensingh </option>
-                                <option value="6">Rajshahi</option>
-                                <option value="7">Sylhet</option>
-                                <option value="8">Rangpur</option>
-                            </select>
+                            <input class="form-control" type="text" name="city" minlength="3" maxlength="40" value="<?=$city;?>" required>
                         </div>
                         <div class="form-group col-md-10 col-sm-12">
                             <label class="text-muted small">Location <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="" id="">
+                            <input class="form-control" type="text" name="location" minlength="10" maxlength="200" value="<?=$location;?>" required>
                         </div>
                         <div class="form-group col-md-5 col-sm-12">
                             <label class="text-muted small">Price <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" name="" id="" min="500" max="300000">
+                            <input class="form-control" type="number" name="price" min="500" max="999999" value="<?=$price;?>" required>
                         </div>
                         <div class="form-group col-md-4 col-sm-12">
                             <label class="text-muted small">Residential type <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-control">
-                                <option value="1">Family</option>
-                                <option value="2">Mess</option>
-                                <option value="3">Hostel</option>
-                                <option value="4">Female Hostel</option>
-                                <option value="5">Sublet</option>
+                            <select name="type" class="form-control">
+                                <option value="">--Select--</option>
+                                <option value="Family">Family</option>
+                                <option value="Mess">Mess</option>
+                                <option value="Hostel">Hostel</option>
+                                <option value="Female Hostel">Female Hostel</option>
+                                <option value="Sublet">Sublet</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3 col-sm-12">
                             <label class="text-muted small">Direction <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Choose...</option>
-                                <option value="1">North</option>
-                                <option value="2">South</option>
-                                <option value="3">East</option>
-                                <option value="4">West</option>
-                                <option value="5">Mixed</option>
+                            <select name="direction" class="form-control">
+                                <option value="">--Select--</option>
+                                <option value="North">North</option>
+                                <option value="South">South</option>
+                                <option value="East">East</option>
+                                <option value="West">West</option>
+                                <option value="Mixed">Mixed</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3 col-sm-12">
                             <label class="text-muted small">Bed <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Choose...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">Above 5</option>
-                            </select>
+                            <input class="form-control" type="number" name="bed" min="1" max="999" value="<?=$bed;?>" required>
                         </div>
                         <div class="form-group col-md-3 col-sm-12">
                             <label class="text-muted small">Bath <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Choose...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">Above 3</option>
-                            </select>
+                            <input class="form-control" type="number" name="bath" min="1" max="99" value="<?=$bath;?>" required>
                         </div>
                         <div class="form-group col-md-2 col-sm-12">
                             <label class="text-muted small">Floor level <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" name="" id="" min="1" max="60">
+                            <input class="form-control" type="number" name="floor" min="1" max="999" value="<?=$floorLevel;?>" required>
                         </div>
                         <div class="form-group col-md-4 col-sm-12">
                             <label class="text-muted small">Size (Sq Ft) <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" name="" id="" min="100.0" step="0.5">
+                            <input class="form-control" type="number" name="size" min="0.0" step="0.1" max="99999999.9" value="<?=$size;?>" requied>
                         </div>
                         <div class="form-group col-lg-12">
                             <label class="text-muted small">Upload pictures <span class="text-danger">*</span></label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" accept='.jpg,.jpeg' multiple>
+                                <input type="file" class="custom-file-input" name="ad_images[]" accept='.jpg,.jpeg' multiple>
                                 <label class="custom-file-label">Image...</label>
                                 <small class="form-text text-muted">Max: 5pics | Supports: jpg and jpeg | First image will be used as cover image</small>
                             </div>
                         </div>
                         <div class="form-group col-lg-12 mb-4">
                             <label class="text-muted small">Brief description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="" id="" rows="5"></textarea>
-                            <small class="form-text text-muted">Description should not have more than 600 characters</small>
+                            <textarea class="form-control" name="description" rows="5"  minlength="15" maxlength="600" required><?=$briefDesc;?></textarea>
+                            <small class="form-text text-muted">Description should not have more than 1000 characters</small>
                         </div>
                         <div class="form-group mb-4 col-md-2 offset-md-10 col-sm-12">
-                            <button class="btn btn-success w-100" type="submit">Submit&ensp;<i class="fas fa-check-circle"></i></button>
+                            <button class="btn btn-success w-100" type="submit" name="submit" >Submit&ensp;<i class="fas fa-check-circle"></i></button>
                         </div>
                     </div>
                 </form>

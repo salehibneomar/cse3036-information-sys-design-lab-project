@@ -26,6 +26,12 @@
 
                 <?php if(isset($_SESSION['user_arr'])){ ?>
                     <ul class="navbar-nav profile-dropdown">
+                        <li class="dropdown header-notification">
+                            <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-primary far fa-bell"></i>&ensp;Notifications&ensp;<span class="badge badge-primary">1</span></button>
+                            <div class="dropdown-menu dropdown-menu-right mt-3 bg-light">
+                                <a class="dropdown-item text-truncate" href="#"><i class="far fa-address-card"></i>&ensp;Profileaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+                            </div>
+                        </li>
                         <li class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="far fa-user"></i>&ensp;<?=substr($_SESSION['user_arr']['name'], 0, strpos($_SESSION['user_arr']['name'], " "));?>
