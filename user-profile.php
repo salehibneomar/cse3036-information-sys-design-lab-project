@@ -66,3 +66,8 @@
 <?php include "includes/footer.php"; ?>
 
 <?php include "includes/common-scripts.php"; ?>
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

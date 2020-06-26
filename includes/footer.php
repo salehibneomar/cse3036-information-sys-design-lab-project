@@ -1,3 +1,26 @@
+
+    <section class="stat-section">
+        <div class="container-fluid w-100 p-0 m-0 card">
+            <div class="row text-center">
+                <div class="col-md-4 stat-col">
+                    <p><i class="far fa-building fa-2x text-secondary"></i></p>
+                    <p>Total Live Ads</p>
+                    <p class="text-secondary numberCounter"><?=$siteStat['totalAds'];?></p>
+                </div>
+                <div class="col-md-4 stat-col">
+                    <p><i class="fas fa-users fa-2x text-secondary"></i></p>
+                    <p>Total Users</p>
+                    <p class="text-secondary numberCounter"><?=$siteStat['totalUsers'];?></p>
+                </div>
+                <div class="col-md-4 stat-col">
+                    <p><i class="fas fa-award fa-2x  text-secondary"></i>
+                    <p>Total Prime Users</p>
+                    <p class="text-secondary numberCounter"><?=$siteStat['totalPrimeUsers'];?></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <footer class="bg-dark">
         <div class="container p-0 m-0 mr-auto ml-auto">
             <div class="row footer-row">

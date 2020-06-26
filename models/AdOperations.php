@@ -8,7 +8,7 @@
 
     class AdOperations{
 
-        private static function viewAdInformationById($adId){
+        private static function getAdInformationById($adId){
             $query="SELECT u.user_id, u.name, u.email, u.phone_number, info.*, feature.* FROM user u, ad info, ad_feature feature 
                     WHERE info.ad_id=? AND u.user_id=info.user_id AND info.ad_status=1 AND info.ad_id=feature.ad_id";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
@@ -20,7 +20,7 @@
             
         }
 
-        private static function viewAdPicturesById($adId){
+        private static function getAdPicturesById($adId){
             $query="SELECT * FROM ad_picture WHERE ad_id=?";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
@@ -85,7 +85,7 @@
             return $stmt->get_result()->fetch_assoc()['ad_id'];
         }
 
-        private static function deleteOnAdInsertionError($query){
+        private static function deleteQuery($query){
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
             $stmt->execute();
@@ -102,22 +102,20 @@
 
             return $stmt->get_result()->num_rows;
         }
-
         //Public functions
 
         public static function viewAdById($adId){
-            $wholeAd=array(AdOperations::viewAdInformationById($adId), AdOperations::viewAdPicturesById($adId));
+            $wholeAd=array(AdOperations::getAdInformationById($adId), AdOperations::getAdPicturesById($adId));
             return $wholeAd;
         }
 
         public static function getAllAds(){
-            $query="SELECT a.*, u.acc_status, i.image_dir FROM ad a, user u, ad_picture i WHERE u.user_id=a.user_id AND i.ad_id=a.ad_id AND i.pic_type=1 AND a.ad_status=1";
+            $query="SELECT a.*, u.acc_status, i.image_dir FROM ad a, user u, ad_picture i WHERE u.user_id=a.user_id AND i.ad_id=a.ad_id AND i.pic_type=1 AND a.ad_status=1 ORDER BY u.acc_status DESC, a.date_posted DESC, a.ad_id DESC";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
             $stmt->execute();
 
             return $stmt->get_result();
-
         }
 
         public static function getAddListByUserId($id){
@@ -147,7 +145,7 @@
 
                 if($adFeatureCreationStatus!=1){
                     $query="DELETE FROM ad WHERE ad_id='$adId'";
-                    self::deleteOnAdInsertionError($query);
+                    self::deleteQuery($query);
                     return -1;
                 }
                 else{
@@ -156,13 +154,13 @@
                     
                     if($adPicturesCreationStatus!=$count || $adPicturesCreationStatus<=0){
                         $query="DELETE FROM ad_picture WHERE ad_id='$adId'";
-                        self::deleteOnAdInsertionError($query);
+                        self::deleteQuery($query);
                         usleep(100000);
                         $query="DELETE FROM ad_feature WHERE ad_id='$adId'";
-                        self::deleteOnAdInsertionError($query);
+                        self::deleteQuery($query);
                         usleep(100000);
                         $query="DELETE FROM ad WHERE ad_id='$adId'";
-                        self::deleteOnAdInsertionError($query);
+                        self::deleteQuery($query);
 
                         return -1;
                     }
@@ -189,6 +187,37 @@
 
             }
         }
+
+
+        public static function deleteAd($userId, $adId){
+            $imageResults=AdOperations::getAdPicturesById($adId);
+            $operationStatus=-1;
+
+            $deleteAdImages=AdOperations::deleteQuery("DELETE FROM ad_picture WHERE ad_id='$adId'");
+            if($deleteAdImages>=1){
+                usleep(100000);
+                $deleteAdFeatures=AdOperations::deleteQuery("DELETE FROM ad_feature WHERE ad_id='$adId' LIMIT 1");
+                if($deleteAdFeatures==1){
+                    usleep(100000);
+                    $deleteAdReports=AdOperations::deleteQuery("DELETE FROM ad_report WHERE ad_id='$adId'");
+                    usleep(100000);
+                    $deleteAd=AdOperations::deleteQuery("DELETE FROM ad WHERE ad_id='$adId' AND user_id='$userId' LIMIT 1");
+
+                    if($deleteAd==1){
+                    
+                        while($img=$imageResults->fetch_assoc()){
+                            unlink($img['image_dir']);
+                        }
+
+                        $operationStatus=1;
+                    }
+                    
+                }
+            }
+
+            return $operationStatus;
+        }
+
     }
 
 ?>

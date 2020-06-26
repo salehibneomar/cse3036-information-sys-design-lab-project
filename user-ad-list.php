@@ -4,6 +4,8 @@
     require_once 'models/AdOperations.php';
 
     $getAddListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);
+    $adStatus=array("Processing","Live");
+    $adStatusColor=array("badge-info", "badge-success");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +26,16 @@
 ?>
 
     <div class="ad-list-wrapper">
+    <?php if(isset($_SESSION['message'])){ ?>
+        <div class="alert <?=$_SESSION['alertColor'];?> alert-dismissible fade show text-center" role="alert">
+            <strong><?=$_SESSION['message'];?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+     <?php } unset($_SESSION['message']); 
+             unset($_SESSION['alertColor']); 
+    ?>
         <div class="card">
             <div class="card-header bg-light">
                 <h6 class="text-muted font-weight-bold p-2 text-center"><?=$getAddListByUserId->num_rows;?>, records found.</h6>
@@ -46,11 +58,11 @@
                             <td><img src="<?=$result['image_dir'];?>"  width="80" height="60"></td>
                             <td class="d-line-block text-truncate"><?=$result['title'];?></td>
                             <td><span class="badge badge-secondary p-2"><?=$result['date_posted'];?></span></td>
-                            <td><span class="badge badge-info p-2"><?=$result['ad_status'];?></span></td>
+                            <td><span class="badge <?=$adStatusColor[$result['ad_status']];?> p-2"><?=$adStatus[$result['ad_status']];?></span></td>
                             <td>
                                 <a href="view-add-details?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
                                 <a href="ad-information-update?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                                <a href="delete-ad?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                                <a href="delete-ad?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-danger delete_btn"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
 
@@ -75,5 +87,29 @@
             "paging":   false,
             "info":     false
         });
+
+        $('.delete_btn').on('click', function(e){
+        e.preventDefault();
+            let link=$(this).attr('href');
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Okay'
+            }).then((result) => {
+                if (result.value){
+                    $(location).attr('href',link);
+                }
+            });
+        });
     });
 </script>
+
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

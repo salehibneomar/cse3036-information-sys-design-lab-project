@@ -1,8 +1,10 @@
 <?php
     require_once 'config/config.init.php';
     require_once 'models/AdOperations.php';
+    include_once 'models/SiteStat.php';
 
     $getAllAds=AdOperations::getAllAds();
+    $siteStat=SiteStat::getSiteStat();
 
 ?>
 <!DOCTYPE html>
@@ -67,33 +69,11 @@
         </div>
     </section>
 
-    <section class="stat-section">
-        <div class="container-fluid w-100 p-0 m-0 card">
-            <div class="row text-center">
-                <div class="col-md-3 stat-col">
-                    <p><i class="far fa-clipboard fa-2x text-secondary"></i></p>
-                    <p>Total ad</p>
-                    <p class="text-secondary numberCounter">1253</p>
-                </div>
-                <div class="col-md-3 stat-col">
-                    <p><i class="far fa-user fa-2x text-secondary"></i></p>
-                    <p>Total user</p>
-                    <p class="text-secondary numberCounter">125</p>
-                </div>
-                <div class="col-md-3 stat-col">
-                    <p><i class="far fa-handshake fa-2x text-secondary"></i></p>
-                    <p>Rented on site</p>
-                    <p class="text-secondary numberCounter">652</p>
-                </div>
-                <div class="col-md-3 stat-col">
-                    <p><i class="far fa-building fa-2x text-secondary"></i></p>
-                    <p>Available for rent</p>
-                    <p class="text-secondary numberCounter">652</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
 <?php include "includes/footer.php"; ?>
     
 <?php include "includes/common-scripts.php"; ?>
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

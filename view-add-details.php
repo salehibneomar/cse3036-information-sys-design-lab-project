@@ -121,10 +121,10 @@
                                 <li class="list-group-item">
                                     <i class="fas fa-clock text-secondary"></i>&emsp;<?=$adInfoResult['date_posted'];?>
                                 </li>
-                                <a class="list-group-item text-dark" href="tel:01700000000">
+                                <a class="list-group-item text-dark" href="tel:<?=$adInfoResult['phone_number'];?>">
                                     <i class="fas fa-phone-alt text-success"></i>&emsp;<?=$adInfoResult['phone_number'];?>
                                 </a>
-                                <a class="list-group-item text-dark" href="mailto:dummy.email@gmai.com">
+                                <a class="list-group-item text-dark" href="mailto:<?=$adInfoResult['email'];?>">
                                     <i class="fas fa-envelope text-primary"></i>&emsp;<?=$adInfoResult['email'];?>
                                 </a>
                                 <li class="list-group-item">
@@ -214,3 +214,8 @@
         });
     });
 </script>
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

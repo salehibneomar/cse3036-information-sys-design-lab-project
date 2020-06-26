@@ -35,11 +35,13 @@
                 $_SESSION['user_arr']['name']=$name;
                 $_SESSION['user_arr']['phone_number']=$phoneNumber;
                 $_SESSION['user_arr']['email']=$email;
+                $oldImageDir= $_SESSION['user_arr']['profile_image_dir'];
                 $_SESSION['user_arr']['profile_image_dir']=$profileImageDir;
                 
                 $_SESSION['message']="Your account has been updated!";
                 usleep(100000);
                 move_uploaded_file($imgTempName, $profileImageDir);
+                unlink($oldImageDir);
                 usleep(100000);
                 header("Location: user-profile");
             }
@@ -130,3 +132,8 @@
         });
     });
 </script>
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

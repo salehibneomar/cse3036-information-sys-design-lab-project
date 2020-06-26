@@ -29,7 +29,7 @@
                         <li class="dropdown header-notification">
                             <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-primary far fa-bell"></i>&ensp;Notifications&ensp;<span class="badge badge-primary">1</span></button>
                             <div class="dropdown-menu dropdown-menu-right mt-3 bg-light">
-                                <a class="dropdown-item text-truncate" href="#"><i class="far fa-address-card"></i>&ensp;Profileaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+                                <a class="dropdown-item text-truncate" href="#">Not Implemented!</a>
                             </div>
                         </li>
                         <li class="dropdown">
@@ -37,9 +37,9 @@
                             <i class="far fa-user"></i>&ensp;<?=explode(" ",$_SESSION['user_arr']['name'])[0];?>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right mt-3 bg-light">
-                            <a class="dropdown-item" href="user-profile"><i class="far fa-address-card"></i>&ensp;Profile</a>
-                            <a class="dropdown-item" href="ad-upload"><i class="far fa-plus-square"></i>&ensp;Post Ad</a>
-                            <a class="dropdown-item" href="user-ad-list"><i class="far fa-list-alt"></i>&ensp;Ad list</a>
+                            <a class="dropdown-item" href="user-profile"><i class="far fa-address-card"></i>&ensp;My Profile</a>
+                            <a class="dropdown-item" href="ad-upload"><i class="far fa-plus-square"></i>&ensp;Post New Ad</a>
+                            <a class="dropdown-item" href="user-ad-list"><i class="far fa-list-alt"></i>&ensp;My Ad list</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="logout"><i class="text-danger fas fa-sign-out-alt"></i>&ensp;Logout</a>
                             </div>

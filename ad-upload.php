@@ -90,9 +90,8 @@
                     usleep(50000);
                 }
 
-                $message="Ad created! taking you to the ad list in a moment.";
+                $message="Your Ad has been created successfully!";
                 $alertColor="alert-success";
-                header("refresh: 2; url=user-ad-list");
             }
             else{
                 $message="Error occured";
@@ -240,3 +239,9 @@
         });
     });
 </script>
+
+
+</body>
+</html>
+
+<?php ob_flush(); ?>

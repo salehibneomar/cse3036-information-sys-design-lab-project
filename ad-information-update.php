@@ -1,3 +1,8 @@
+<?php
+    require_once 'config/config.init.php';
+    require_once 'models/AdOperations.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,3 +74,8 @@
         });
     });
 </script>
+
+</body>
+</html>
+
+<?php ob_flush(); ?>
