@@ -44,7 +44,7 @@
                     <?php while($result=$getAddListByUserId->fetch_assoc()){ ?>
                         <tr>
                             <td><img src="<?=$result['image_dir'];?>"  width="80" height="60"></td>
-                            <td><?=$result['title'];?></td>
+                            <td class="d-line-block text-truncate"><?=$result['title'];?></td>
                             <td><span class="badge badge-secondary p-2"><?=$result['date_posted'];?></span></td>
                             <td><span class="badge badge-info p-2"><?=$result['ad_status'];?></span></td>
                             <td>

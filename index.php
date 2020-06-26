@@ -4,7 +4,6 @@
 
     $getAllAds=AdOperations::getAllAds();
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,15 +36,17 @@
                             <div class="col-lg-4 col-sm-6 mb-4">
                                 <div class="card advert-card">
                                     <div class="ad-image-con">
-                                        <img src="<?=$result['image_dir'];?>" >
+                                        <img src="<?=$result['image_dir'];?>" alt="image" />
                                     </div>
                                     <div class="card-body pb-0">
-                                        <span class="badge badge-success"><i class="fas fa-check"></i>&ensp;Verified user</span>
+                                        <?php if($result['acc_status']==3){?>
+                                            <span class="badge badge-success"><i class="fas fa-award"></i>&ensp;Prime User</span>
+                                        <?php } ?>
                                         <h6><?=$result['title'];?></h6>
-                                        <p><i class="fas fa-map-marker-alt text-danger"></i><?=$result['city'];?></p>
+                                        <p><i class="fas fa-map-marker-alt text-danger">&ensp;</i><?=$result['city'];?></p>
                                         <p><i class="fas fa-clock text-info"></i>&ensp;<?=$result['date_posted'];?></p>
                                         <p><i class="fas fa-tag text-warning"></i>&ensp;<?=$result['residential_type'];?></p>
-                                        <h5 class="text-right"><span class="text-primary">৳</span>&ensp;<?=$result['price'];?>/<small>Mo</small></h5>
+                                        <h5 class="text-right"><span class="text-primary">৳</span>&ensp;<?=number_format($result['price']);?>/<small>Mo</small></h5>
                                     </div>
                                     <div class="card-footer mt-0 bg-transparent">
                                         <a href="view-add-details?ad_id=<?=$result['ad_id'];?>" class="btn btn-sm btn-secondary w-100"><i class="fas fa-arrow-right"></i>&ensp; See details</a>

@@ -30,7 +30,7 @@
             }
 
             $accountUpdateStatus=UserProfileOperations::updateUserById($id, $name, $phoneNumber, $email, $profileImageDir);
-
+            
             if($accountUpdateStatus==1){
                 $_SESSION['user_arr']['name']=$name;
                 $_SESSION['user_arr']['phone_number']=$phoneNumber;
@@ -38,10 +38,9 @@
                 $_SESSION['user_arr']['profile_image_dir']=$profileImageDir;
                 
                 $_SESSION['message']="Your account has been updated!";
-
+                usleep(100000);
                 move_uploaded_file($imgTempName, $profileImageDir);
-                
-                sleep(1);
+                usleep(100000);
                 header("Location: user-profile");
             }
             else if($accountUpdateStatus==0){

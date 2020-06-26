@@ -39,6 +39,7 @@
 
         //Images
         $imageArr=$_FILES['ad_images']['name'];
+        $imageTempNameArr=$_FILES['ad_images']['tmp_name'];
         $firstImageSize=$_FILES['ad_images']['size'][0];
 
         if(empty($title) || empty($city) || empty($location) || empty($price) || empty($residentialType) ||
@@ -53,7 +54,7 @@
             $featureInfo=new AdFeature($direction, $bed, $bath, $size, $floorLevel, $briefDesc);
             $imageList=array();
             for($i=0; $i<count($imageArr); ++$i){
-                $imageDir="ad_pic/".$imageArr[$i];
+                $imageDir="ad_img/".$imageArr[$i];
                 if($i==0){
                     array_push($imageList, new AdImage($imageDir, $datePosted, 1));
                 }
@@ -62,8 +63,42 @@
                 }
             }
 
-            $adObj = new AdPopo($title, $city, $location, $datePosted, $price, $residentialType, $userId, $featureInfo, $imageList);
+            $adObj = new AdPopo($title, $city, $location, $datePosted, $price, $residentialType, $featureInfo, $imageList);
             $ad=json_decode(json_encode($adObj), true);
+
+            //print_r($ad);
+
+            $adCreationStatus=AdOperations::createAd($ad, $userId);
+            
+            if($adCreationStatus==1){
+                $title="";
+                $city="";
+                $location="";
+                $price="";
+                $residentialType="";
+                $direction="";
+                $bed="";
+                $bath="";
+                $floorLevel="";
+                $size="";
+                $briefDesc="";
+
+                for($i=0; $i<count($imageArr); ++$i){
+                    $imageDir="ad_img/".$imageArr[$i];
+                    $imageTempName=$imageTempNameArr[$i];
+                    move_uploaded_file($imageTempName,$imageDir);
+                    usleep(50000);
+                }
+
+                $message="Ad created! taking you to the ad list in a moment.";
+                $alertColor="alert-success";
+                header("refresh: 2; url=user-ad-list");
+            }
+            else{
+                $message="Error occured";
+                $alertColor="alert-danger";
+            }
+            
 
         }
     }
@@ -94,7 +129,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    <?php } ?>
+    <?php }$message=false;?>
         <div class="card">
             <div class="card-header">
                 <h6 class="text-muted font-weight-bold p-2 text-center">Ad Information Form</h6>
@@ -104,8 +139,8 @@
                     <div class="form-row p-2">
                         <div class="form-group col-lg-12">
                             <label class="text-muted small">Title <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="title" minlength="5" maxlength="150" value="<?=$title;?>" required>
-                            <small class="form-text text-muted">Title should not have more than 150 characters</small>
+                            <input class="form-control" type="text" name="title" minlength="5" maxlength="240" value="<?=$title;?>" required>
+                            <small class="form-text text-muted">Title should not have more than 240 characters</small>
                         </div>
                         <div class="form-group col-md-2 col-sm-12">
                             <label class="text-muted small">City <span class="text-danger">*</span></label>
@@ -155,7 +190,7 @@
                         </div>
                         <div class="form-group col-md-4 col-sm-12">
                             <label class="text-muted small">Size (Sq Ft) <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" name="size" min="0.0" step="0.1" max="99999999.9" value="<?=$size;?>" requied>
+                            <input class="form-control" type="number" name="size" min="1.0" step="0.001" max="99999999" value="<?=$size;?>" requied>
                         </div>
                         <div class="form-group col-lg-12">
                             <label class="text-muted small">Upload pictures <span class="text-danger">*</span></label>

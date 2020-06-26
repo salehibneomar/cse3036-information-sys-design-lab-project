@@ -34,7 +34,7 @@
                         </li>
                         <li class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="far fa-user"></i>&ensp;<?=substr($_SESSION['user_arr']['name'], 0, strpos($_SESSION['user_arr']['name'], " "));?>
+                            <i class="far fa-user"></i>&ensp;<?=explode(" ",$_SESSION['user_arr']['name'])[0];?>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right mt-3 bg-light">
                             <a class="dropdown-item" href="user-profile"><i class="far fa-address-card"></i>&ensp;Profile</a>

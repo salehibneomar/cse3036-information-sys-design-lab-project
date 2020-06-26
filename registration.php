@@ -8,8 +8,8 @@
     $message=false;
     $alertColor="alert-warning";
 
-    $name = "";
-    $phoneNumber = "";
+    $name="";
+    $phoneNumber="";
 
     if(isset($_POST['reg_btn'])){
 

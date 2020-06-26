@@ -4,59 +4,65 @@
     include_once 'AdPopo.php';
     include_once 'AdFeature.php';
     include_once 'AdImage.php';
+    include_once 'AdReport.php';
 
     class AdOperations{
 
-        private function viewAdInformationById($id){
-            $query="SELECT info.*, feature.* FROM ad info, ad_feature feature WHERE info.ad_id=? AND feature.ad_id=?";
+        private static function viewAdInformationById($adId){
+            $query="SELECT u.user_id, u.name, u.email, u.phone_number, info.*, feature.* FROM user u, ad info, ad_feature feature 
+                    WHERE info.ad_id=? AND u.user_id=info.user_id AND info.ad_status=1 AND info.ad_id=feature.ad_id";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
-            $stmt->bind_param('ss', $id, $id);
+            $stmt->bind_param('s', $adId);
             $stmt->execute();
 
             return $stmt->get_result();
             
         }
 
-        private function viewAdPicturesById($id){
+        private static function viewAdPicturesById($adId){
             $query="SELECT * FROM ad_picture WHERE ad_id=?";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
-            $stmt->bind_param('s', $id);
+            $stmt->bind_param('s', $adId);
             $stmt->execute();
 
             return $stmt->get_result();
         }
 
-        private function insertAdInfomation($adInfo){
+        private static function insertAdInfomation($title, $city, $location, $datePosted, $price, $residentialType, $userId){
             $query="INSERT INTO ad (title, city, location, date_posted, price, residential_type, user_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
-            //$stmt->bind_param('sssssss',);
+            $stmt->bind_param('sssssss', $title, $city, $location, $datePosted, $price, $residentialType, $userId);
             $stmt->execute();
 
-            return $stmt->num_rows;
+            return $stmt->affected_rows;
         }
 
-        private function insertAdFeature($adFeature){
+        private static function insertAdFeature($direction, $bed, $bath, $size, $floorLevel, $briefDes, $adId){
             $query="INSERT INTO ad_feature (direction, bed, bath, size, floor_level, breif_desc, ad_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
-            //$stmt->bind_param('sssssss',);
+            $stmt->bind_param('sssssss', $direction, $bed, $bath, $size, $floorLevel, $briefDes, $adId);
             $stmt->execute();
 
-            return $stmt->num_rows;
+            return $stmt->affected_rows;
         }
 
-        private function insertAdPicture($adPictures){
+        private static function insertAdPictures($adPictures, $adId){
             $values="";
             $size=count($adPictures);
             for($i=0; $i<$size; ++$i){
-                if($i<$size){
-                    $values=$values."(1,2,3,4),";
+                $imageDir=$adPictures[$i]['imageDir'];
+                $picType=$adPictures[$i]['picType'];
+                $dateUploaded=$adPictures[$i]['dateUploaded'];
+                
+                if($i<$size-1){
+                    $values=$values."('$imageDir', '$picType', '$dateUploaded', '$adId'),";
                 }
                 else{
-                    $values=$values."(1,2,3,4)";
+                    $values=$values."('$imageDir', '$picType', '$dateUploaded', '$adId')";
                 }
             }
 
@@ -65,11 +71,11 @@
             $stmt->prepare($query);
             $stmt->execute();
 
-            return $stmt->num_rows;
+            return $stmt->affected_rows;
         }
 
-        //insertAdInfo
-        private function getInsertedAdId($userId){
+    
+        private static function getInsertedAdId($userId){
             $query="SELECT ad_id FROM ad WHERE user_id=? ORDER BY ad_id DESC LIMIT 1";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
@@ -79,10 +85,28 @@
             return $stmt->get_result()->fetch_assoc()['ad_id'];
         }
 
+        private static function deleteOnAdInsertionError($query){
+            $stmt=DBConnectionSingleton::getConnection()->stmt_init();
+            $stmt->prepare($query);
+            $stmt->execute();
+
+            return $stmt->affected_rows;
+        }
+
+        private static function adReportDuplicacyCheck($adId, $userId){
+            $query="SELECT * FROM ad_report WHERE ad_id=? AND user_id=?";
+            $stmt=DBConnectionSingleton::getConnection()->stmt_init();
+            $stmt->prepare($query);
+            $stmt->bind_param('ss', $adId, $userId);
+            $stmt->execute();
+
+            return $stmt->get_result()->num_rows;
+        }
+
         //Public functions
 
-        public function viewAdById($id){
-            $wholeAd=array($this->viewAdInformationById($id), $this->viewAdPicturesById($id));
+        public static function viewAdById($adId){
+            $wholeAd=array(AdOperations::viewAdInformationById($adId), AdOperations::viewAdPicturesById($adId));
             return $wholeAd;
         }
 
@@ -99,7 +123,7 @@
         public static function getAddListByUserId($id){
             $query="SELECT info.ad_id, info.title, info.date_posted, info.ad_status, pic.image_dir 
                          FROM ad info, ad_picture pic 
-                            WHERE info.user_id=? AND info.ad_id=pic.ad_id AND pic.pic_type=1";
+                            WHERE info.user_id=? AND info.ad_id=pic.ad_id AND pic.pic_type=1 AND info.ad_status=1";
 
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
@@ -109,8 +133,61 @@
             return $stmt->get_result();                
         }
 
-        public function createAd($user_id, $ad){
-            
+        public static function createAd($ad, $userId){
+            $adInfoCreationStatus=self::insertAdInfomation($ad['title'],$ad['city'],$ad['location'],$ad['datePosted'],$ad['price'],$ad['residentialType'],$userId);
+            usleep(100000);
+            if($adInfoCreationStatus!=1){
+                return -1;
+            }
+            else{
+                $adId=self::getInsertedAdId($userId);
+                usleep(100000);
+                $adFeatureCreationStatus=self::insertAdFeature($ad['featureInfo']['direction'], $ad['featureInfo']['bed'], $ad['featureInfo']['bath'], $ad['featureInfo']['size'], $ad['featureInfo']['floorLevel'], $ad['featureInfo']['briefDesc'], $adId);
+                usleep(100000);
+
+                if($adFeatureCreationStatus!=1){
+                    $query="DELETE FROM ad WHERE ad_id='$adId'";
+                    self::deleteOnAdInsertionError($query);
+                    return -1;
+                }
+                else{
+                    $count=count($ad['imageList']);
+                    $adPicturesCreationStatus=self::insertAdPictures($ad['imageList'], $adId);
+                    
+                    if($adPicturesCreationStatus!=$count || $adPicturesCreationStatus<=0){
+                        $query="DELETE FROM ad_picture WHERE ad_id='$adId'";
+                        self::deleteOnAdInsertionError($query);
+                        usleep(100000);
+                        $query="DELETE FROM ad_feature WHERE ad_id='$adId'";
+                        self::deleteOnAdInsertionError($query);
+                        usleep(100000);
+                        $query="DELETE FROM ad WHERE ad_id='$adId'";
+                        self::deleteOnAdInsertionError($query);
+
+                        return -1;
+                    }
+                    else{
+                        return 1;
+                    }
+                }
+            }
+        }
+
+        public static function adReport($report){
+            $hasDuplicate=AdOperations::adReportDuplicacyCheck($report['adId'], $report['userId']);
+            if($hasDuplicate==1){
+                return 2;
+            }
+            else{
+                $query="INSERT INTO ad_report (reason, date, ad_id, user_id) VALUES(?, ?, ?, ?)";
+                $stmt=DBConnectionSingleton::getConnection()->stmt_init();
+                $stmt->prepare($query);
+                $stmt->bind_param('ssss', $report['reason'], $report['date'], $report['adId'], $report['userId']);
+                $stmt->execute();
+    
+                return $stmt->affected_rows;
+
+            }
         }
     }
 
