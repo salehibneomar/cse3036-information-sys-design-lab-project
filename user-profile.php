@@ -28,7 +28,7 @@
             <?php } unset($_SESSION['message']); ?>
         <div class="card">
             <div class="card-header bg-light"> 
-                <img src="<?=$_SESSION['user_arr']['profile_image_dir'];?>" alt="" class="mx-auto d-block img-thumbnail">
+                <img src="<?=$_SESSION['user_arr']['profile_image_dir'];?>" alt="image" class="mx-auto d-block img-thumbnail">
             </div>
             <div class="card-body">
                 <table class="table table-sm table-bordered">

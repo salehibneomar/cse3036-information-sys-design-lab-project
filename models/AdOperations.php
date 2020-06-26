@@ -1,12 +1,13 @@
 <?php 
 
     require_once 'config/DBConnectionSingleton.php';
+    include_once 'AdRepository.php';
     include_once 'AdPopo.php';
     include_once 'AdFeature.php';
     include_once 'AdImage.php';
     include_once 'AdReport.php';
 
-    class AdOperations{
+    class AdOperations implements AdRepository{
 
         private static function getAdInformationById($adId){
             $query="SELECT u.user_id, u.name, u.email, u.phone_number, info.*, feature.* FROM user u, ad info, ad_feature feature 

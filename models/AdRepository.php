@@ -1,10 +1,13 @@
 <?php
 
     interface AdRepository{
-        public function createAd($ad);
-        public function viewAdById($id);
-        public function deleteAdById($id);
-        public function updateAdById($id, $updatedInfo);
+
+        public static function viewAdById($adId);
+        public static function getAllAds();
+        public static function getAddListByUserId($id);
+        public static function createAd($ad, $userId);
+        public static function adReport($report);
+        public static function deleteAd($userId, $adId);
     }
 
 ?>
