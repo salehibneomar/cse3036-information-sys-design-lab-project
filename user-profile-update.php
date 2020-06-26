@@ -1,6 +1,6 @@
 <?php
-    require_once 'config/config.init.php';
-    include_once 'models/UserProfileOperations.php';
+    require 'config/config.init.php';
+    require 'models/UserProfileOperations.php';
 
     if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
 

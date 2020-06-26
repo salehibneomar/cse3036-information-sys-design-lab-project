@@ -1,7 +1,7 @@
 <?php
-    require_once 'config/config.init.php';
+    require 'config/config.init.php';
+    require 'models/AdOperations.php';
     if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
-    include_once 'models/AdOperations.php';
 
     $message=false;
     $alertColor="alert-warning";

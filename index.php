@@ -1,7 +1,7 @@
 <?php
-    require_once 'config/config.init.php';
-    require_once 'models/AdOperations.php';
-    include_once 'models/SiteStat.php';
+    require 'config/config.init.php';
+    require 'models/AdOperations.php';
+    include 'models/SiteStat.php';
 
     $getAllAds=AdOperations::getAllAds();
     $siteStat=SiteStat::getSiteStat();
