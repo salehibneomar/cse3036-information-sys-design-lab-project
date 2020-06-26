@@ -43,6 +43,8 @@
                                     <div class="card-body pb-0">
                                         <?php if($result['acc_status']==3){?>
                                             <span class="badge badge-success"><i class="fas fa-award"></i>&ensp;Prime User</span>
+                                        <?php } else{ ?>
+                                            <br>
                                         <?php } ?>
                                         <h6><?=$result['title'];?></h6>
                                         <p><i class="fas fa-map-marker-alt text-danger">&ensp;</i><?=$result['city'];?></p>
@@ -97,5 +99,3 @@
 
 </body>
 </html>
-
-<?php ob_flush(); ?>
