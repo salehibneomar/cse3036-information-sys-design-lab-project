@@ -1,6 +1,6 @@
 <?php
     require 'config/config.init.php';
-    require 'models/AdOperations.php';
+    include 'models/AdOperations.php';
 
 ?>
 <!DOCTYPE html>

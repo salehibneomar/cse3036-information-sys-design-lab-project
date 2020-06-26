@@ -1,6 +1,6 @@
 <?php
     require 'config/config.init.php';
-    require 'models/AdOperations.php';
+    include 'models/AdOperations.php';
     include 'models/SiteStat.php';
 
     $getAllAds=AdOperations::getAllAds();

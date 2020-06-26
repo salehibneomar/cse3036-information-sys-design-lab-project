@@ -1,6 +1,6 @@
 <?php 
-    require_once 'config/DBConnectionSingleton.php';
-    include_once 'UserPopo.php';
+
+    require 'UserPopo.php';
 
     Class UserLogin extends User{
 

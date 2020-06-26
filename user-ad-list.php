@@ -1,6 +1,7 @@
 <?php
     require 'config/config.init.php';
-    require 'models/AdOperations.php';
+    include 'models/AdOperations.php';
+
     if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
 
     $getAddListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);

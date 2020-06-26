@@ -1,6 +1,6 @@
 <?php
     require 'config/config.init.php';
-    require 'models/AdOperations.php';
+    include 'models/AdOperations.php';
 
     if(isset($_GET['ad_id'])){
         $adId=strip_tags(trim($_GET['ad_id']));

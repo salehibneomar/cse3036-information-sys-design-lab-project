@@ -1,7 +1,7 @@
 <?php   
 
     require 'config/config.init.php';
-    require 'models/UserLogin.php';
+    include 'models/UserLogin.php';
 
     if(isset($_SESSION['user_arr'])){ header("Location: index"); exit();}
 

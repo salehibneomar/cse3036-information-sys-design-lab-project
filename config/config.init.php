@@ -1,6 +1,6 @@
 <?php
     //error_reporting(0);
-    require_once 'DBConnectionSingleton.php';
+    require 'config/DBConnectionSingleton.php';
 
     date_default_timezone_set('Asia/Dhaka');
     ob_start();

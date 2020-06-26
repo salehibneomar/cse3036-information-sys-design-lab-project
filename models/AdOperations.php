@@ -1,11 +1,10 @@
 <?php 
 
-    require_once 'config/DBConnectionSingleton.php';
-    include_once 'AdRepository.php';
-    include_once 'AdPopo.php';
-    include_once 'AdFeature.php';
-    include_once 'AdImage.php';
-    include_once 'AdReport.php';
+    require 'AdRepository.php';
+    require 'AdPopo.php';
+    require 'AdFeature.php';
+    require 'AdImage.php';
+    require 'AdReport.php';
 
     class AdOperations implements AdRepository{
 

@@ -1,8 +1,8 @@
 <?php 
 
-    require_once 'config/DBConnectionSingleton.php';
+    require 'models/UserRepository.php';
 
-    class UserProfileOperations{
+    class UserProfileOperations implements UserRepository{
         public static $defaultImage="profile_pic/default.png";
 
         public static function updateUserById($id, $name, $phoneNumber, $email, $profileImageDir){
