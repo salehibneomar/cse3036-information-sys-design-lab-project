@@ -41,7 +41,9 @@
                 $_SESSION['message']="Your account has been updated!";
                 usleep(100000);
                 move_uploaded_file($imgTempName, $profileImageDir);
-                unlink($oldImageDir);
+                if($oldImageDir!=UserProfileOperations::$defaultImage){
+                    unlink($oldImageDir);
+                }
                 usleep(100000);
                 header("Location: user-profile");
             }

@@ -3,6 +3,7 @@
     require_once 'config/DBConnectionSingleton.php';
 
     class UserProfileOperations{
+        public static $defaultImage="profile_img/default.png";
 
         public static function updateUserById($id, $name, $phoneNumber, $email, $profileImageDir){
             $query="UPDATE user SET name=?, phone_number=?, email=?, profile_image_dir=? WHERE user_id=? LIMIT 1";
