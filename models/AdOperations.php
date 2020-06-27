@@ -1,10 +1,10 @@
 <?php 
 
-    require 'AdRepository.php';
     require 'AdPopo.php';
     require 'AdFeature.php';
     require 'AdImage.php';
     require 'AdReport.php';
+    require 'AdRepository.php';
 
     class AdOperations implements AdRepository{
 
@@ -118,7 +118,7 @@
             return $stmt->get_result();
         }
 
-        public static function getAddListByUserId($id){
+        public static function getAdListByUserId($id){
             $query="SELECT info.ad_id, info.title, info.date_posted, info.ad_status, pic.image_dir 
                          FROM ad info, ad_picture pic 
                             WHERE info.user_id=? AND info.ad_id=pic.ad_id AND pic.pic_type=1 AND info.ad_status=1";

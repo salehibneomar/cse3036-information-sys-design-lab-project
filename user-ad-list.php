@@ -4,7 +4,7 @@
 
     if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
 
-    $getAddListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);
+    $getAdListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);
     $adStatus=array("Processing","Live");
     $adStatusColor=array("badge-info", "badge-success");
 ?>

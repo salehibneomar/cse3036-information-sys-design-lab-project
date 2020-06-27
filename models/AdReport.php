@@ -1,6 +1,7 @@
 <?php
 
     class AdReport{
+        //private $id;
         public $reason;
         public $date;
         public $adId;
