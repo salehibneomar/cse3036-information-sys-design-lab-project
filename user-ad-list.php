@@ -4,7 +4,7 @@
 
     if(!(isset($_SESSION['user_arr']))){ header("Location: logout"); exit();}
 
-    $getAdListByUserId=AdOperations::getAddListByUserId($_SESSION['user_arr']['user_id']);
+    $getAdListByUserId=AdOperations::getAdListByUserId($_SESSION['user_arr']['user_id']);
     $adStatus=array("Processing","Live");
     $adStatusColor=array("badge-info", "badge-success");
 ?>
@@ -39,9 +39,9 @@
     ?>
         <div class="card">
             <div class="card-header bg-light">
-                <h6 class="text-muted font-weight-bold p-2 text-center"><?=$getAddListByUserId->num_rows;?>, records found.</h6>
+                <h6 class="text-muted font-weight-bold p-2 text-center"><?=$getAdListByUserId->num_rows;?>, records found.</h6>
             </div>
-            <?php if($getAddListByUserId->num_rows!=0){ ?>
+            <?php if($getAdListByUserId->num_rows!=0){ ?>
             <div class="card-body">
                 <table class="table table-hover w-100" id="ad-list-table" >
                     <thead>
@@ -54,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php while($result=$getAddListByUserId->fetch_assoc()){ ?>
+                    <?php while($result=$getAdListByUserId->fetch_assoc()){ ?>
                         <tr>
                             <td><img src="<?=$result['image_dir'];?>"  width="80" height="60"></td>
                             <td class="d-line-block text-truncate"><?=$result['title'];?></td>
