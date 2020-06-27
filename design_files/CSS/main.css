@@ -211,11 +211,10 @@ header{
 
 .profile-wrapper .card .card-header img{
     max-width: 180px !important;
-    height: 180px !important;
-    border-radius: 50% !important;
+    max-height: 180px !important;
     padding: 4px !important;
-    border: 3px solid rgba(150, 144, 184, 0.4)!important;
-    box-shadow: 0 0 2px 4px rgba(150, 144, 184, 0.2);
+    border: 2px solid rgba(150, 144, 184, 0.4)!important;
+    box-shadow: 0 0 1px 2px rgba(150, 144, 184, 0.2);
 }
 
 .ad-upload-form-wrapper{
@@ -678,6 +677,10 @@ footer{
         width: 50% !important;
         margin-bottom: 5px !important;
     }
+    .profile-wrapper .card .card-header img{
+        max-width: 150px !important;
+        max-height: 150px !important;
+    }
 }
 
 @media all and (max-width: 668px){
@@ -692,6 +695,10 @@ footer{
     }
     .header-notification .dropdown-menu{
         width: 400px !important;
+    }
+    .profile-wrapper .card .card-header img{
+        max-width: 120px !important;
+        max-height: 120px !important;
     }
 }
 
