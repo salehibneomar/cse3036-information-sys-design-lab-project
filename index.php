@@ -38,7 +38,7 @@
                             <div class="col-lg-4 col-sm-6 mb-4">
                                 <div class="card advert-card">
                                     <div class="ad-image-con">
-                                        <img src="<?=$result['image_dir'];?>" alt="image" />
+                                        <img src="<?=$result['image_dir'];?>" alt="image" class="card-img-top img-fluid" />
                                     </div>
                                     <div class="card-body pb-0">
                                         <?php if($result['acc_status']==3){?>

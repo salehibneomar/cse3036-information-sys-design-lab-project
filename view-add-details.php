@@ -93,7 +93,7 @@
                             <ul class="slides">
                             <?php while($adPicResult=$adPictures->fetch_assoc()){ ?>
                                 <li>
-                                    <img src="<?=$adPicResult['image_dir'];?>" alt="image" />
+                                    <img src="<?=$adPicResult['image_dir'];?>" class="card-img-top img-fluid img-thumbnail" />
                                 </li>
                             <?php }?>
                             </ul>

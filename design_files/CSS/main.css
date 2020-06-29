@@ -333,11 +333,7 @@ header{
 }
 
 .ad-image-con img{
-    width: 100%;
     height: 100%;
-    display: flex;
-    margin: 0 auto;
-    overflow: hidden;
     transition: all 0.3s ease-in-out;
 }
 
