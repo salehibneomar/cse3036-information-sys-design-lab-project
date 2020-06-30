@@ -130,6 +130,7 @@
     $(document).ready(function(){
         $('.custom-file-input').on('change',function(){
             var fileName = $(this).val().substring($(this).val().lastIndexOf("\\")+1);
+            fileName=fileName.substring(0, 5)+"...";
             $('.custom-file-label').html(fileName);
         });
     });

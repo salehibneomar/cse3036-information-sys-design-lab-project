@@ -218,6 +218,19 @@
             return $operationStatus;
         }
 
+        public static function getAdByUserIdAndAdId($userId, $adId){
+            $query="SELECT info.title, info.price, feature.breif_desc, pic.image_dir 
+                    FROM ad info, ad_feature feature, ad_picture pic 
+                    WHERE info.user_id=? AND info.ad_id=? AND info.ad_id=feature.ad_id AND pic.ad_id=info.ad_id  AND pic.pic_type=1;";
+
+            $stmt=DBConnectionSingleton::getConnection()->stmt_init();
+            $stmt->prepare($query);
+            $stmt->bind_param('ss',$userId, $adId);
+            $stmt->execute();
+
+            return $stmt->get_result();
+        }
+
     }
 
 ?>

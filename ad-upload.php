@@ -202,7 +202,7 @@
                         </div>
                         <div class="form-group col-lg-12 mb-4">
                             <label class="text-muted small">Brief description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="description" rows="5"  minlength="15" maxlength="600" required><?=$briefDesc;?></textarea>
+                            <textarea class="form-control" name="description" rows="5"  minlength="15" maxlength="1000" required><?=$briefDesc;?></textarea>
                             <small class="form-text text-muted">Description should not have more than 1000 characters</small>
                         </div>
                         <div class="form-group mb-4 col-md-2 offset-md-10 col-sm-12">
