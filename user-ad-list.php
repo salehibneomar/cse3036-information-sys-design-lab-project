@@ -48,16 +48,18 @@
                         <tr>
                             <th width="10%">Image</th>
                             <th>Title</th>
+                            <th width="15%">Price</th>
                             <th width="15%">Date</th>
-                            <th width="15%">Status</th>
-                            <th width="20%">Action</th>
+                            <th width="10%">Status</th>
+                            <th width="15%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php while($result=$getAdListByUserId->fetch_assoc()){ ?>
                         <tr>
                             <td><img src="<?=$result['image_dir'];?>"  width="80" height="60"></td>
-                            <td class="d-line-block text-truncate"><?=$result['title'];?></td>
+                            <td><?=substr($result['title'], 0, 50);?>...</td>
+                            <td><?=number_format($result['price']);?>&ensp;৳</td>
                             <td><span class="badge badge-secondary p-2"><?=$result['date_posted'];?></span></td>
                             <td><span class="badge <?=$adStatusColor[$result['ad_status']];?> p-2"><?=$adStatus[$result['ad_status']];?></span></td>
                             <td>

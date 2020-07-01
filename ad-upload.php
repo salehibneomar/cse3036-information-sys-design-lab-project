@@ -55,7 +55,7 @@
             $featureInfo=new AdFeature($direction, $bed, $bath, $size, $floorLevel, $briefDesc);
             $imageList=array();
             for($i=0; $i<count($imageArr); ++$i){
-                $imageDir="ad_img/".$imageArr[$i];
+                $imageDir=$imageDir=AdPopo::$adImageFolderName.$imageArr[$i];
                 if($i==0){
                     array_push($imageList, new AdImage($imageDir, $datePosted, 1));
                 }
@@ -85,10 +85,10 @@
                 $briefDesc="";
 
                 for($i=0; $i<count($imageArr); ++$i){
-                    $imageDir="ad_img/".$imageArr[$i];
+                    $imageDir=AdPopo::$adImageFolderName.$imageArr[$i];
                     $imageTempName=$imageTempNameArr[$i];
                     move_uploaded_file($imageTempName,$imageDir);
-                    usleep(50000);
+                    usleep(10000);
                 }
 
                 $message="Your Ad has been created successfully!";
@@ -129,7 +129,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    <?php }$message=false;?>
+    <?php } ?>
         <div class="card">
             <div class="card-header">
                 <h6 class="text-muted font-weight-bold p-2 text-center">Ad Information Form</h6>

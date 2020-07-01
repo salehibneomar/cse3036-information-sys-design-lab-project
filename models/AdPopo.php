@@ -12,6 +12,7 @@
         //public $userId;
         public $featureInfo;
         public $imageList;
+        public static $adImageFolderName="ad_img/";
 
         public function __construct($title, $city, $location, $datePosted, $price, $residentialType, $featureInfo, $imageList){
             $this->title=strip_tags($title);

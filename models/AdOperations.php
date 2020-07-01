@@ -21,7 +21,7 @@
         }
 
         private static function getAdPicturesById($adId){
-            $query="SELECT * FROM ad_picture WHERE ad_id=?";
+            $query="SELECT * FROM ad_picture WHERE ad_id=? ORDER BY pic_type DESC";
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
             $stmt->bind_param('s', $adId);
@@ -119,9 +119,8 @@
         }
 
         public static function getAdListByUserId($id){
-            $query="SELECT info.ad_id, info.title, info.date_posted, info.ad_status, pic.image_dir 
-                         FROM ad info, ad_picture pic 
-                            WHERE info.user_id=? AND info.ad_id=pic.ad_id AND pic.pic_type=1 AND info.ad_status=1";
+            $query="SELECT info.*, pic.image_dir FROM ad info, ad_picture pic 
+                    WHERE info.user_id=? AND info.ad_id=pic.ad_id AND pic.pic_type=1 AND info.ad_status=1";
 
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
@@ -219,9 +218,9 @@
         }
 
         public static function getAdByUserIdAndAdId($userId, $adId){
-            $query="SELECT info.title, info.price, feature.breif_desc, pic.image_dir 
+            $query="SELECT info.title, info.price, feature.breif_desc, pic.image_dir, pic.date_uploaded
                     FROM ad info, ad_feature feature, ad_picture pic 
-                    WHERE info.user_id=? AND info.ad_id=? AND info.ad_id=feature.ad_id AND pic.ad_id=info.ad_id  AND pic.pic_type=1;";
+                    WHERE info.user_id=? AND info.ad_id=? AND info.ad_id=feature.ad_id AND pic.ad_id=info.ad_id  AND pic.pic_type=1";
 
             $stmt=DBConnectionSingleton::getConnection()->stmt_init();
             $stmt->prepare($query);
@@ -229,6 +228,20 @@
             $stmt->execute();
 
             return $stmt->get_result();
+        }
+
+        public static function updateAd($ad, $adId, $userId){
+            $query="UPDATE ad info, ad_feature feature, ad_picture pic 
+                    SET info.title=?, info.price=?, feature.breif_desc=?, pic.image_dir=?, pic.date_uploaded=?
+                    WHERE info.ad_id=? AND info.user_id=? AND info.ad_id=feature.ad_id AND pic.ad_id=info.ad_id AND pic.pic_type=1";
+
+            $stmt=DBConnectionSingleton::getConnection()->stmt_init();
+            $stmt->prepare($query);
+            $stmt->bind_param('sssssss', $ad['title'], $ad['price'], $ad['brief_desc'], $ad['cover_image'], $ad['date_uploaded'], $adId, $userId);
+            $stmt->execute();
+                    
+            return $stmt->affected_rows;
+
         }
 
     }

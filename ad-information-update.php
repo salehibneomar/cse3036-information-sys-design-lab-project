@@ -18,7 +18,52 @@
                 $validity=false;
             }
             else{
-                
+                if(isset($_POST['update_btn'])){
+                    $title=strip_tags(trim($_POST['title']));
+                    $price=strip_tags(trim($_POST['price']));
+                    $description=strip_tags(trim($_POST['description']));
+
+                    $previousCoverImage=$adInfo['image_dir'];
+                    $newCoverImageSize=$_FILES['cover_image']['size'];
+                    $newCoverImageTempName=$_FILES['cover_image']['tmp_name'];
+                    $newCoverImageDir=$imageDir=AdPopo::$adImageFolderName.$_FILES['cover_image']['name'];;
+
+                    if(empty($title) || empty($price) || empty($description)){
+                        $message="Invalid/Empty fields found!";
+                    }
+                    else{
+                        
+                        $ad=array(
+                            'title'=>$title,
+                            'price'=>$price,
+                            'brief_desc'=>$description,
+                            'cover_image'=>($newCoverImageSize<=0)? $previousCoverImage : $newCoverImageDir,
+                            'date_uploaded'=>($newCoverImageSize<=0)? $adInfo['date_uploaded'] : date('Y-m-d')
+                        );
+
+                        $adUpdateStatus=AdOperations::updateAd($ad, $adId, $userId);
+                        
+                        if($adUpdateStatus<0){
+                            $message="Error occured!";
+                            $alertColor="alert-danger";
+                        }
+                        else if($adUpdateStatus==0){
+                            $message="No change!";
+                            $alertColor="alert-info";
+                        }
+                        else{
+                            $_SESSION['message']="Successfuly updated!";
+                            $_SESSION['alertColor']="alert-success";
+                            if($newCoverImageSize>0){
+                                unlink($previousCoverImage);
+                                move_uploaded_file($newCoverImageTempName, $newCoverImageDir);
+                            }
+                            usleep(10000);
+                            header("Location: user-ad-list");
+                        }
+
+                    }
+                }
             }
         }
         else{
@@ -53,6 +98,14 @@
 ?>
 
     <div class="ad-upload-form-wrapper">
+    <?php if($message){ ?>
+        <div class="alert <?=$alertColor;?> alert-dismissible fade show text-center" role="alert">
+            <strong><?=$message;?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php }$message=false;?>
         <div class="card">
             <div class="card-header">
                 <h6 class="text-muted font-weight-bold p-2 text-center">Update Your Ad Information</h6>
@@ -67,7 +120,7 @@
                         </div>
                         <div class="form-group col-md-5 col-sm-12">
                             <label class="text-muted small">Price</label>
-                            <input class="form-control" type="number" name="price" min="500" max="999999" value="<?=$adInfo['price'];?>">
+                            <input class="form-control" type="number" name="price" min="500" max="9999999" value="<?=$adInfo['price'];?>">
                         </div>
                         <div class="form-group col-md-7 col-sm-12">
                             <label class="text-muted small">Update cover picture</label>

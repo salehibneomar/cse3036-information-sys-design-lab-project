@@ -210,9 +210,8 @@ header{
 }
 
 .profile-wrapper .card .card-header img{
-    max-width: 180px !important;
-    max-height: 175px !important;
-    min-height: 175px !important;
+    width: 180px;
+    height: 180px;
     padding: 4px !important;
     border: 2px solid rgba(150, 144, 184, 0.4)!important;
     box-shadow: 0 0 1px 2px rgba(150, 144, 184, 0.2);
@@ -675,9 +674,8 @@ footer{
         margin-bottom: 5px !important;
     }
     .profile-wrapper .card .card-header img{
-        max-width: 150px !important;
-        max-height: 145px !important;
-        min-height: 145px !important;
+        width: 140px;
+        height: 140px;
     }
 }
 
@@ -695,9 +693,8 @@ footer{
         width: 400px !important;
     }
     .profile-wrapper .card .card-header img{
-        max-width: 120px !important;
-        max-height: 115px !important;
-        min-height: 115px !important;
+        width: 120px;
+        height: 120px;
     }
 }
 
