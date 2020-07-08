@@ -19,7 +19,8 @@
         $imgTempName =$_FILES['image']['tmp_name'];
         $imageFileSize =$_FILES['image']['size'];
 
-        $profileImageDir = $_SESSION['user_arr']['profile_image_dir'];
+        $profileImageDir=$_SESSION['user_arr']['profile_image_dir'];
+        $oldImageDir=$_SESSION['user_arr']['profile_image_dir'];
 
         if(empty($name) || empty($phoneNumber)){
             $message="Name and Phone number cannot be empty!";
@@ -35,15 +36,19 @@
                 $_SESSION['user_arr']['name']=$name;
                 $_SESSION['user_arr']['phone_number']=$phoneNumber;
                 $_SESSION['user_arr']['email']=$email;
-                $oldImageDir= $_SESSION['user_arr']['profile_image_dir'];
                 $_SESSION['user_arr']['profile_image_dir']=$profileImageDir;
-                
+
                 $_SESSION['message']="Your account has been updated!";
                 usleep(100000);
-                if($oldImageDir!=UserProfileOperations::$defaultImage){
-                    unlink($oldImageDir);
+                
+                if($imageFileSize>0){
+                    if($oldImageDir!="profile_pic/default.png")
+                    {
+                        unlink($oldImageDir);
+                    }
                     move_uploaded_file($imgTempName, $profileImageDir);
                 }
+
                 usleep(100000);
                 header("Location: user-profile");
             }
